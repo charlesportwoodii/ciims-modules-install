@@ -88,6 +88,7 @@ return array (
   '{woah} An error occured!' => '',
   '{{horray}} The database has been installed. Press the "Continue" button below to create an admin user.' => '',
   '{{ohsnap}} Looks like the database istallations failed failed. Most likely this is an issue with your database connection. Alternatively, you could try running the migrations from the command line.' => '',
+  '{{ohsnap}} Looks like the database istallations failed. Most likely this is an issue with your database connection. Alternatively, you could try running the migrations from the command line.' => '',
   '{{warning}} CiiMS doesn\'t have permissions to write to the runtime directory. Please correct this using the information below before continuing.' => '',
   '{{warning}} There was an an issue downloading and installing Yii Framework. Please verify the permissions are set correctly before attempting again.' => '',
   '{{warning}} {{error}}' => '',

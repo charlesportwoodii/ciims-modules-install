@@ -25,7 +25,7 @@
         <?php echo Yii::t('Install.main', 'Could Not Complete Migration'); ?>
     </h3>
     <p>
-        <?php echo Yii::t('Install.main', '{{ohsnap}} Looks like the database istallations failed failed. Most likely this is an issue with your database connection. Alternatively, you could try running the migrations from the command line.', array(
+        <?php echo Yii::t('Install.main', '{{ohsnap}} Looks like the database istallations failed. Most likely this is an issue with your database connection. Alternatively, you could try running the migrations from the command line.', array(
             '{{ohsnap}}' => CHtml::tag('strong', array('class' => 'highlight'), Yii::t('Install.main', 'Oh Snap!'))
         )); ?>
     </p>
