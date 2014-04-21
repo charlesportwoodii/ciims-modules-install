@@ -2,12 +2,11 @@
     "name": "ciims-modules/install",
     "description": "The installation module for CiiMS",
     "license": "MIT",
-    "version": "2.1",
     "type" : "drupal-module",
     "keywords": [
         "ciims",
-	"installer",
-	"module"
+        "installer",
+        "module"
     ],
     "authors": [
         {
