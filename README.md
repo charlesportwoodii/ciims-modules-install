@@ -8,6 +8,15 @@ This package was built to pre-bootstrap CiiMS until it can be passed off to Yii 
 
 This module is licensed with [CiiMS](https://github.com/charlesportwoodii/CiiMS) under the MIT License. Please don't steal my work and claim it as your own.
 
+## Hacking
+
+This module uses npm, bower, and grunt for asset management, and is mostly managed through grunt. To make changes to the assets, run the following commands.
+
+```
+npm install
+grunt
+```
+
 ## Disclaimers
 
 While this module is generic enough to be used in other Yii applications with some tweaking, it is dependent upon the ```Cii``` core component, and will produce errors until that is remedied. 

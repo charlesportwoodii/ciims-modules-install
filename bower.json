@@ -1,0 +1,9 @@
+{
+  "name": "ciims-themes-install",
+  "dependencies": {
+    "fontawesome": "v4.0.3",
+    "pure": "~0.4.2",
+    "pace": "0.5.1",
+    "highlight.js": "https://github.com/components/highlightjs.git#8.0.0"
+  }
+}
