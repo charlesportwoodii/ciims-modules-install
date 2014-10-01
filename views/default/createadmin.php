@@ -12,12 +12,8 @@
         <?php echo $form->textField($model, 'email',  array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Email'))); ?>
         <?php echo $form->passwordField($model, 'password',  array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Password'))); ?>
     </div>
-    <div class="pure-u-1">
-        <?php echo $form->textField($model, 'firstName',  array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'First Name'))); ?>
-        <?php echo $form->textField($model, 'lastName',  array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Last Name'))); ?>
-    </div>
    <div class="pure-u-1">
-        <?php echo $form->textField($model, 'displayName', array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Display Name'))); ?>
+        <?php echo $form->textField($model, 'username', array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Username'))); ?>
         <?php echo $form->textField($model, 'siteName', array('class'=>'pure-u-1-3', 'placeholder' => Yii::t('Install.main', 'Site Name'))); ?>
     </div>
     <hr />

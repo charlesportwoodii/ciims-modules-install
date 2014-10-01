@@ -24,22 +24,10 @@ class UserForm extends CFormModel
     public $password;
     
     /**
-     * @var string $firstName
-     * The user's First Name
-     */
-    public $firstName;
-    
-    /**
-     * @var string $lastName
-     * The user's Last Name
-     */
-    public $lastName;
-    
-    /**
-     * @var string $displayName
+     * @var string $username
      * The user's desired display name
      */
-    public $displayName;
+    public $username;
     
     /**
      * @var string $siteName
@@ -73,9 +61,9 @@ class UserForm extends CFormModel
     public function rules()
     {
         return array(
-            array('email, password, firstName, lastName, displayName, siteName', 'required'),
+            array('email, password, username, siteName', 'required'),
             array('email', 'email'),
-            array('email, password, firstName, lastName, displayName, siteName', 'length', 'max'=>255),
+            array('email, password, username, siteName', 'length', 'max'=>255),
             array('isConfigDirWritable', 'boolean', 'trueValue'=>true),
             array('isConfigDirWritable', 'checkConfigDir')
         );
@@ -90,9 +78,7 @@ class UserForm extends CFormModel
         return array(
             'email' => Yii::t('Install.main','Email Address'),
             'password' => Yii::t('Install.main','Password'),
-            'firstName' => Yii::t('Install.main','First Name'),
-            'lastName' => Yii::t('Install.main','Last Name'),
-            'displayName' => Yii::t('Install.main','Display Name'),
+            'username' => Yii::t('Install.main','Display Name'),
             'siteName' => Yii::t('Install.main','Site Name')
         );
     }
@@ -133,12 +119,10 @@ class UserForm extends CFormModel
             // Try to save the record into the database
             $connection = new CDbConnection(Yii::app()->session['dsn']['dsn'], Yii::app()->session['dsn']['username'], Yii::app()->session['dsn']['password']);
             $connection->setActive(true);
-            $connection->createCommand('INSERT INTO users (id, email, password, firstName, lastName, displayName, user_role, status, created, updated) VALUES (1, :email, :password, :firstName, :lastName, :displayName, 9, 1, UTC_TIMESTAMP(), UTC_TIMESTAMP())')
+            $connection->createCommand('INSERT INTO users (id, email, password, username, user_role, status, created, updated) VALUES (1, :email, :password, :username, 9, 1, UNIX_TIMESTAMP(),UNIX_TIMESTAMP())')
                        ->bindParam(':email',        $this->email)
                        ->bindParam(':password',     $this->encryptedPassword)
-                       ->bindParam(':firstName',    $this->firstName)
-                       ->bindParam(':lastName',     $this->lastName)
-                       ->bindParam(':displayName',  $this->displayName)
+                       ->bindParam(':username',     $this->username)
                        ->execute();
             return true;
         }
@@ -178,19 +162,6 @@ class UserForm extends CFormModel
      */
     public function getEncryptedPassword()
     {
-        $hash = $this->encryptHash($this->email, $this->password, $this->encryptionKey);
-        return password_hash($hash, PASSWORD_BCRYPT, array('cost' => 13));
-    }
-    
-    /**
-     * Creates an encrypted hash to be used as a password
-     * @param string $email     The user email
-     * @param string $password  The password to be encrypted
-     * @param string $_dbsalt   The salt value to be used (Yii::app()->params['encryptionKey'])
-     * @return 64 character encrypted string
-     */
-    private function encryptHash($email, $password, $_dbsalt)
-    {
-        return mb_strimwidth(hash("sha512", hash("sha512", hash("whirlpool", md5($password . md5($email)))) . hash("sha512", md5($password . md5($_dbsalt))) . $_dbsalt), 0, 64);   
+        return password_hash($this->password, PASSWORD_BCRYPT, array('cost' => 13));
     }
 }
