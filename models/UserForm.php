@@ -153,7 +153,8 @@ class UserForm extends CFormModel
      */
     public function getEncryptionKey()
     {
-        return mb_strimwidth(hash("sha512", hash("sha512", hash("whirlpool", md5(time() . md5(time())))) . hash("sha512", time()) . time()), 0, 120);
+        $factory = new CryptLib\Random\Factory;
+        return $factory->getMediumStrengthGenerator()->generateString(128);
     }
     
     /**
