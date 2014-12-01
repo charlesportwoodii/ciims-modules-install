@@ -18,5 +18,5 @@
     </div>
     <hr />
 
-   <button class="pure-button pure-button-primary" type="submit"><?php echo Yii::t('Install.main', 'Create Admin User'); ?></button>
+   <button id="createAdminUser" class="pure-button pure-button-primary" type="submit"><?php echo Yii::t('Install.main', 'Create Admin User'); ?></button>
 <?php $this->endWidget(); ?>

@@ -7,7 +7,10 @@ class InstallerCommand extends CiiConsoleCommand
 	public function actionIndex($dbHost, $dbName, $dbUsername, $dbPassword, $adminEmail, $adminPassword, $adminUsername, $siteName, $force=false)
 	{
 		if ($force===false && file_exists(Yii::getPathOfAlias('application.config').'/main.php'))
-			$this->log(Yii::t('Install.main', 'The installer cannot run, because CiiMS is already installed'), true);
+		{	
+			$this->log(Yii::t('Install.main', 'The installer cannot run, because CiiMS is already installed'));
+			return false;
+		}
 
 		$databaseForm = new DatabaseForm;
 		$databaseForm->attributes = array(
@@ -19,15 +22,21 @@ class InstallerCommand extends CiiConsoleCommand
 
 		// Verify there is a valid connection
 		if (!$databaseForm->validateConnection())
+		{
 			$this->log($databaseForm->getError('dsn'));
+			return false;
+		}
 
 		// Run the migration
 		$migration = $this->runMigrationTool($databaseForm->attributes);
 
 		// Verify the migration completed
 		if (!strpos($migration, 'Migrated up successfully.') && !strpos($migration, 'Your system is up-to-date.'))
-			$this->log(Yii::t('Install.main', 'Migrations failed to complete. Please correct any errors, and run `php protected/yiic.php migrate up` manually to verify the database is installed.'), true);
-		
+		{
+			$this->log(Yii::t('Install.main', 'Migrations failed to complete. Please correct any errors, and run `php protected/yiic.php migrate up` manually to verify the database is installed.'));
+			return false;
+		}
+
 		$userForm = new UserForm;
 		$userForm->attributes = array(
 			'email'    => $adminEmail,
@@ -38,7 +47,10 @@ class InstallerCommand extends CiiConsoleCommand
 
 		// Validate that the user information is valid
 		if (!$userForm->validateForm())
-			$this->log(print_r($userForm->getErrors(), true));
+		{
+			$this->log(print_r($userForm->getErrors()));
+			return false;
+		}
 
 		// Write the user to the database
 		try {
@@ -49,13 +61,15 @@ class InstallerCommand extends CiiConsoleCommand
 	                   ->bindParam(':username',     $userForm->username)
 	                   ->execute();
 	    } catch (Exception $e) {
-	    	$this->log(Yii::t('Install.main', 'CiiMS was unable to add your user to the database.'), true);
+	    	$this->log(Yii::t('Install.main', 'CiiMS was unable to add your user to the database.'));
+	    	return false;
 	    }
 
 		// Write the config files to disk
 		$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey);
 
-		$this->log(Yii::t('Install.main', 'CiiMS has successfully been installed!'), true);
+		$this->log('Install Complete');
+		$this->log(Yii::t('Install.main', 'CiiMS has successfully been installed!'));
 	}
 
 	/**
