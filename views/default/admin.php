@@ -8,3 +8,4 @@
 
 <hr />
 <?php echo CHtml::link(Yii::t('Install.main', 'Login'), $this->createUrl('/dashboard'), array('class' => 'pure-button pure-button-success')); ?>
+<?php Yii::app()->clientScript->registerScript('History', "window.history.replaceState({}, '', window.location.href.replace('createadmin', 'dashboard'));"); ?>
