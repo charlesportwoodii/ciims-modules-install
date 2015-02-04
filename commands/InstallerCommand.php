@@ -4,7 +4,7 @@ Yii::import('ext.cii.commands.CiiConsoleCommand');
 Yii::import('application.modules.install.models.*');
 class InstallerCommand extends CiiConsoleCommand
 {
-	public function actionIndex($dbHost, $dbName, $dbUsername, $dbPassword, $adminEmail, $adminPassword, $adminUsername, $siteName, $force=false)
+	public function actionIndex($dbHost, $dbName, $dbUsername, $dbPassword, $adminEmail, $adminPassword, $adminUsername, $siteName, $force=false, $writeConfig=true)
 	{
 		if ($force===false && file_exists(Yii::getPathOfAlias('application.config').'/main.php'))
 		{	
@@ -66,7 +66,8 @@ class InstallerCommand extends CiiConsoleCommand
 	    }
 
 		// Write the config files to disk
-		$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey);
+		if (!$writeConfig)
+			$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey);
 
 		$this->log('Install Complete');
 		$this->log(Yii::t('Install.main', 'CiiMS has successfully been installed!'));
