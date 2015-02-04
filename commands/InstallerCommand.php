@@ -66,7 +66,7 @@ class InstallerCommand extends CiiConsoleCommand
 	    }
 
 		// Write the config files to disk
-		if (!$writeConfig)
+		if ($writeConfig)
 			$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey);
 
 		$this->log('Install Complete');
