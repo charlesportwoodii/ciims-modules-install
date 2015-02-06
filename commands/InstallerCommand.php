@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('ext.cii.commands.CiiConsoleCommand');
+Yii::import('cii.commands.CiiConsoleCommand');
 Yii::import('application.modules.install.models.*');
 class InstallerCommand extends CiiConsoleCommand
 {
