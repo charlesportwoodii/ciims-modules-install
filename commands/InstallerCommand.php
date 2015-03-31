@@ -4,7 +4,7 @@ Yii::import('cii.commands.CiiConsoleCommand');
 Yii::import('application.modules.install.models.*');
 class InstallerCommand extends CiiConsoleCommand
 {
-	public function actionIndex($dbHost, $dbName, $dbUsername, $dbPassword, $adminEmail, $adminPassword, $adminUsername, $siteName, $force=false, $writeConfig=true)
+	public function actionIndex($dbHost, $dbName, $dbUsername, $dbPassword, $adminEmail, $adminPassword, $adminUsername, $siteName, $force=false, $writeConfig=true, $debug=false)
 	{
 		if ($force===false && file_exists(Yii::getPathOfAlias('application.config').'/main.php'))
 		{	
@@ -67,7 +67,7 @@ class InstallerCommand extends CiiConsoleCommand
 
 		// Write the config files to disk
 		if ($writeConfig)
-			$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey);
+			$this->generateConfigFile($databaseForm->attributes, $siteName, $userForm->encryptionKey, $debug);
 
 		$this->log('Install Complete');
 		$this->log(Yii::t('Install.main', 'CiiMS has successfully been installed!'));
@@ -108,7 +108,7 @@ class InstallerCommand extends CiiConsoleCommand
      * Generates a configuration file inside our config directory
      * Writes to /config/main.php
      */
-    private function generateConfigFile($db, $siteName, $key)
+    private function generateConfigFile($db, $siteName, $key, $debug)
     {
         $user = $db['username'];
         $pass = $db['password'];
@@ -125,7 +125,7 @@ class InstallerCommand extends CiiConsoleCommand
 	                'password' => '{$pass}',
 	                'charset' => 'utf8',
 	                'schemaCachingDuration' => '3600',
-	                'enableProfiling' => true,
+	                'enableProfiling' => {$debug},
 	            ),
 	            'cache' => array(
 	                'class' => 'CFileCache',
@@ -134,8 +134,11 @@ class InstallerCommand extends CiiConsoleCommand
 	        'params' => require('params.php')
 	    );";
         
+        $trace = $debug ? 3 : 0;
         $params = "<?php return array(
-        	'encryptionKey' => '{$key}'
+        	'encryptionKey' => '{$key}',
+        	'debug' => {$debug},
+        	'trace' => {$trace}
         );";
 
         // Write the configuration file out
