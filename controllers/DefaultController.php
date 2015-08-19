@@ -164,7 +164,7 @@ class DefaultController extends CController
             '--adminPassword='.$userModel->password,
             '--adminUsername='.$userModel->username,
             '--siteName='.$userModel->siteName,
-            '--force=true',
+            '--force=true'
         ));
     }
 

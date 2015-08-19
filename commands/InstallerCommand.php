@@ -124,8 +124,7 @@ class InstallerCommand extends CiiConsoleCommand
 	                'username' => '{$user}',
 	                'password' => '{$pass}',
 	                'charset' => 'utf8',
-	                'schemaCachingDuration' => '3600',
-	                'enableProfiling' => {$debug},
+	                'schemaCachingDuration' => '3600'
 	            ),
 	            'cache' => array(
 	                'class' => 'CFileCache',
@@ -136,9 +135,7 @@ class InstallerCommand extends CiiConsoleCommand
         
         $trace = $debug ? 3 : 0;
         $params = "<?php return array(
-        	'encryptionKey' => '{$key}',
-        	'debug' => {$debug},
-        	'trace' => {$trace}
+        	'encryptionKey' => '{$key}'
         );";
 
         // Write the configuration file out
