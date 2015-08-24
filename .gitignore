@@ -2,3 +2,5 @@ node_modules
 bower_components
 assets/lib
 vendor/*
+
+tests/_output/*
